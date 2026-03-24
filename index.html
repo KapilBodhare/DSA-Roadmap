@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSA Roadmap – 12 Week Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #fdf9f0;
+    --line: #e8e0d0;
+    --ink: #2d2d2d;
+    --blue: #3b82f6;
+    --orange: #f97316;
+    --red: #ef4444;
+    --green: #22c55e;
+    --purple: #a855f7;
+    --teal: #14b8a6;
+    --yellow: #eab308;
+    --pink: #ec4899;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #c8c0b0;
+    min-height: 100vh;
+    padding: 30px 16px;
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    justify-content: center;
+  }
+
+  .notebook {
+    background: var(--paper);
+    width: 100%;
+    max-width: 680px;
+    border-radius: 4px 12px 12px 4px;
+    box-shadow: -8px 0 0 #b0a898, 4px 4px 20px rgba(0,0,0,0.25), 8px 8px 0 rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Spiral binding */
+  .spirals {
+    position: absolute;
+    left: -2px;
+    top: 0;
+    bottom: 0;
+    width: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    gap: 18px;
+    z-index: 10;
+  }
+  .spiral {
+    width: 22px;
+    height: 22px;
+    border: 3px solid #888;
+    border-radius: 50%;
+    background: #c8c0b0;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+    flex-shrink: 0;
+  }
+
+  /* Ruled lines */
+  .content {
+    margin-left: 40px;
+    padding: 24px 28px 40px 20px;
+    background-image: repeating-linear-gradient(
+      transparent,
+      transparent 31px,
+      var(--line) 31px,
+      var(--line) 32px
+    );
+    background-size: 100% 32px;
+    background-position: 0 8px;
+  }
+
+  /* Red margin line */
+  .content::before {
+    content: '';
+    position: absolute;
+    left: 72px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(239, 68, 68, 0.3);
+  }
+
+  h1 {
+    font-family: 'Architects Daughter', cursive;
+    font-size: 28px;
+    color: var(--blue);
+    margin-bottom: 28px;
+    margin-top: 8px;
+    line-height: 1.2;
+    text-shadow: 2px 2px 0 rgba(59,130,246,0.15);
+  }
+
+  .week-block {
+    position: relative;
+    margin-bottom: 10px;
+    animation: fadeIn 0.4s ease both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .week-block:nth-child(2) { animation-delay: 0.05s; }
+  .week-block:nth-child(3) { animation-delay: 0.10s; }
+  .week-block:nth-child(4) { animation-delay: 0.15s; }
+  .week-block:nth-child(5) { animation-delay: 0.20s; }
+  .week-block:nth-child(6) { animation-delay: 0.25s; }
+  .week-block:nth-child(7) { animation-delay: 0.30s; }
+  .week-block:nth-child(8) { animation-delay: 0.35s; }
+  .week-block:nth-child(9) { animation-delay: 0.40s; }
+  .week-block:nth-child(10) { animation-delay: 0.45s; }
+  .week-block:nth-child(11) { animation-delay: 0.50s; }
+
+  .connector {
+    display: flex;
+    align-items: center;
+    margin: 0 0 4px 10px;
+    height: 28px;
+  }
+  .connector-line {
+    width: 3px;
+    height: 100%;
+    border-radius: 2px;
+    margin-left: 11px;
+  }
+  .arrow {
+    font-size: 22px;
+    margin-left: 4px;
+    line-height: 1;
+  }
+
+  .week-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: 2.5px solid currentColor;
+    font-weight: 800;
+    font-size: 15px;
+    margin-bottom: 6px;
+    background: white;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    user-select: none;
+  }
+  .week-header:hover {
+    transform: translateX(3px);
+    box-shadow: 3px 3px 0 currentColor;
+  }
+
+  .week-body {
+    padding: 4px 0 4px 8px;
+    font-size: 13.5px;
+    line-height: 1.7;
+  }
+
+  .topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 5px;
+  }
+  .topic-tag {
+    background: #f1f5f9;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 5px;
+    padding: 1px 8px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #334155;
+  }
+  .topic-tag.highlight {
+    background: #fef3c7;
+    border-color: #f59e0b;
+    color: #92400e;
+  }
+
+  .note-line {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    margin: 3px 0;
+    font-size: 13px;
+  }
+  .note-label {
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .revision-block {
+    background: #fff7ed;
+    border: 2px dashed #fb923c;
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+    font-size: 13px;
+  }
+  .revision-block h3 {
+    font-size: 14px;
+    font-weight: 800;
+    color: #ea580c;
+    margin-bottom: 4px;
+  }
+
+  /* Color themes per week */
+  .w1 { color: var(--blue); }
+  .w1 .week-header { border-color: var(--blue); color: var(--blue); }
+  .w1 .connector-line { background: var(--blue); }
+
+  .w2 { color: var(--orange); }
+  .w2 .week-header { border-color: var(--orange); color: var(--orange); }
+  .w2 .connector-line { background: var(--orange); }
+
+  .w3 { color: #e53e3e; }
+  .w3 .week-header { border-color: #e53e3e; color: #e53e3e; }
+  .w3 .connector-line { background: #e53e3e; }
+
+  .w4 { color: #1d4ed8; }
+  .w4 .week-header { border-color: #1d4ed8; color: #1d4ed8; }
+  .w4 .connector-line { background: #1d4ed8; }
+
+  .w5 { color: var(--green); }
+  .w5 .week-header { border-color: var(--green); color: var(--green); }
+  .w5 .connector-line { background: var(--green); }
+
+  .w6 { color: var(--orange); }
+  .w6 .week-header { border-color: var(--orange); color: var(--orange); }
+  .w6 .connector-line { background: var(--orange); }
+
+  .w7 { color: var(--purple); }
+  .w7 .week-header { border-color: var(--purple); color: var(--purple); }
+  .w7 .connector-line { background: var(--purple); }
+
+  .w8 { color: var(--teal); }
+  .w8 .week-header { border-color: var(--teal); color: var(--teal); }
+  .w8 .connector-line { background: var(--teal); }
+
+  .w9 { color: #dc2626; }
+  .w9 .week-header { border-color: #dc2626; color: #dc2626; }
+  .w9 .connector-line { background: #dc2626; }
+
+  .w10 { color: var(--pink); }
+  .w10 .week-header { border-color: var(--pink); color: var(--pink); }
+  .w10 .connector-line { background: var(--pink); }
+
+  .w11 { color: #7c3aed; }
+  .w11 .week-header { border-color: #7c3aed; color: #7c3aed; }
+  .w11 .connector-line { background: #7c3aed; }
+
+  .study-note { color: var(--orange); }
+  .goal-note { color: var(--green); }
+  .tip-note { color: var(--blue); }
+  .warn-note { color: #dc2626; }
+
+  .new-badge {
+    font-size: 10px;
+    background: #fee2e2;
+    color: #dc2626;
+    border: 1.5px solid #fca5a5;
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-weight: 800;
+    margin-left: 4px;
+  }
+
+  .week-body.collapsed { display: none; }
+
+  .footer-note {
+    margin-top: 20px;
+    padding: 10px 14px;
+    background: #f0fdf4;
+    border: 2px solid #86efac;
+    border-radius: 10px;
+    font-size: 12.5px;
+    color: #166534;
+    font-weight: 700;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="notebook">
+  <div class="spirals" id="spirals"></div>
+  <div class="content">
+    <h1>DSA Roadmap — 12 Week Plan 📚</h1>
+
+    <!-- Week 1-2 -->
+    <div class="week-block w1">
+      <div class="week-header" onclick="toggle(this)">
+        📌 Week 1–2: Basics + Arrays + Strings
+      </div>
+      <div class="week-body">
+        <div class="topics">
+          <span class="topic-tag">Arrays</span>
+          <span class="topic-tag">Strings</span>
+          <span class="topic-tag">Basic Recursion</span>
+          <span class="topic-tag">Time & Space Complexity</span>
+        </div>
+        <div class="note-line"><span class="note-label study-note">📖 Study:</span><span>30 min concept → 1.5–2 hr solve 8–10 questions daily. Start EASY → MEDIUM</span></div>
+        <div class="note-line"><span class="note-label goal-note">💡 Goal:</span><span>Prefix sum, basic recursion patterns, Big-O intuition</span></div>
+        <div class="note-line"><span class="note-label tip-note">💬 Tip:</span><span>Don't skip time complexity — it's asked in every interview!</span></div>
+      </div>
+    </div>
+
+    <div class="connector w1"><div class="connector-line"></div><div class="arrow">↓</div></div>
+
+    <!-- Week 3 -->
+    <div class="week-block w2">
+      <div class="week-header" onclick="toggle(this)">
+        🔍 Week 3: Searching + Sorting + Hashing
+      </div>
+      <div class="week-body">
+        <div class="topics">
+          <span class="topic-tag highlight">Binary Search (VERY IMPORTANT!)</span>
+          <span class="topic-tag">Sorting basics</span>
+          <span class="topic-tag">HashMap / HashSet</span>
+        </div>
+        <div class="note-line"><span class="note-label study-note">📖 Study:</span><span>Practice binary search variations (rotated, answer-based). Daily 8–10 problems</span></div>
+        <div class="note-line"><span class="note-label goal-note">✅ Goal:</span><span>Identify hashing vs brute force instantly</span></div>
+      </div>
+    </div>
+
+    <div class="connector w2"><div class="connector-line"></div><div class="arrow">↓</div></div>
+
+    <!-- Week 4 -->
+    <div class="week-block w3">
+      <div class="week-header" onclick="toggle(this)">
+        🪟 Week 4: Sliding Window + Two Pointer
+      </div>
+      <div class="week-body">
+        <div class="topics">
+          <span class="topic-tag">Fixed & variable window</span>
+          <span class="topic-tag">Subarray/substring problems</span>
+        </div>
+        <div class="note-line"><span class="note-label study-note">📖 Study:</span><span>Pattern recognition — solve 3–4 same pattern in a row</span></div>
+        <div class="note-line"><span class="note-label goal-note">🎯 Goal:</span><span>Reduce brute force thinking</span></div>
+      </div>
+    </div>
+
+    <div class="connector w3"><div class="connector-line"></div><div class="arrow">↓</div></div>
+
+    <!-- Week 5 -->
+    <div class="week-block w4">
+      <div class="week-header" onclick="toggle(this)">
+        🔗 Week 5: Linked List + Stack + Queue
+      </div>
+      <div class="week-body">
+        <div class="topics">
+          <span class="topic-tag">LL basics, cycle, reverse</span>
+          <span class="topic-tag">Monotonic Stack</span>
+          <span class="topic-tag">Queue</span>
+        </div>
+        <div class="note-line"><span class="note-label study-note">📖 Study:</span><span>Dry run on paper — focus on logic not memorizing</span></div>
+        <div class="note-line"><span class="note-label goal-note">🧩 Goal:</span><span>Build pointer intuition</span></div>
+      </div>
+    </div>
+
+    <div class="connector w4"><div class="connector-line"></div><div class="arrow">↓</div></div>
+
+    <!-- REVISION 1 -->
+    <div class="revision-block">
+      <h3>🔄 Mid-Point Revision (End of Week 5)</h3>
+      Re-solve 2–3 hard problems from each previous topic. Identify weak areas. Take a mock test!
+    </div>
+
+    <!-- Week 6 -->
+    <div class="week-block w5">
+      <div class="week-header" onclick="toggle(this)">
+        🌳 Week 6: Trees
+      </div>
+      <div class="week-body">
+        <div class="topics">
+          <span class="topic-tag">Traversals (DFS, BFS)</span>
+          <span class="topic-tag">Height & diameter</span>
+          <span class="topic-tag">BST basics</span>
+        </div>
+        <div class="note-line"><span class="note-label study-note">📖 Study:</span><span>Visualize trees — draw them! 6–8 problems daily</span></div>
+        <div class="note-line"><span class="note-label goal-note">💪 Goal:</span><span>Strong recursion + tree understanding</span></div>
+      </div>
+    </div>
+
+    <div class="connector w5"><div class="connector-line"></div><div class="arrow">↓</div></div>
+
+    <!-- Week 7 — NEW: Backtracking -->
+    <div class="week-block w6">
+      <div class="week-header" onclick="toggle(this)">
+        🔙 Week 7: Backtracking <span class="new-badge">ADDED</span>
+      </div>
+      <div class="week-body">
+        <div class="topics">
+          <span class="topic-tag highlight">N-Queens</span>
+          <span class="topic-tag highlight">Subsets & Permutations</span>
+          <span class="topic-tag">Sudoku Solver</span>
+          <span class="topic-tag">Combination Sum</span>
+        </div>
+        <div class="note-line"><span class="note-label study-note">📖 Study:</span><span>Always draw the decision tree before coding. Choose → Explore → Undo</span></div>
+        <div class="note-line"><span class="note-label goal-note">🎯 Goal:</span><span>Understand the "undo" step deeply — this is what makes backtracking hard</span></div>
+        <div class="note-line"><span class="note-label warn-note">⚠️ Note:</span><span>This was MISSING from original roadmap — critical for FAANG interviews!</span></div>
+      </div>
+    </div>
+
+    <div class="connector w6"><div class="connector-line"></div><div class="arrow">↓</div></div>
+
+    <!-- Week 8 -->
+    <div class="week-block w7">
+      <div class="week-header" onclick="toggle(this)">
+        ⚡ Week 8: Heaps + Greedy
+      </div>
+      <div class="week-body">
+        <div class="topics">
+          <span class="topic-tag">Priority Queue</span>
+          <span class="topic-tag">Top K problems</span>
+          <span class="topic-tag">Greedy logic</span>
+        </div>
+        <div class="note-line"><span class="note-label study-note">📖 Study:</span><span>Understand WHY greedy works — decision-making problems</span></div>
+        <div class="note-line"><span class="note-label goal-note">⏱ Goal:</span><span>Identify optimization problems quickly</span></div>
+      </div>
+    </div>
+
+    <div class="connector w7"><div class="connector-line"></div><div class="arrow">↓</div></div>
+
+    <!-- Week 9 -->
+    <div class="week-block w8">
+      <div class="week-header" onclick="toggle(this)">
+        🕸️ Week 9: Graphs
+      </div>
+      <div class="week-body">
+        <div class="topics">
+          <span class="topic-tag">BFS, DFS</span>
+          <span class="topic-tag">Cycle detection</span>
+          <span class="topic-tag">Topo sort</span>
+          <span class="topic-tag">Dijkstra</span>
+        </div>
+        <div class="note-line"><span class="note-label study-note">📖 Study:</span><span>Treat graph like a tree extension — deep traversal practice</span></div>
+        <div class="note-line"><span class="note-label goal-note">⏱ Goal:</span><span>Clear traversal pattern understanding</span></div>
+      </div>
+    </div>
+
+    <div class="connector w8"><div class="connector-line"></div><div class="arrow">↓</div></div>
+
+    <!-- Week 10 — NEW: Tries + Bit Manipulation -->
+    <div class="week-block w9">
+      <div class="week-header" onclick="toggle(this)">
+        🔤 Week 10: Tries + Bit Manipulation <span class="new-badge">ADDED</span>
+      </div>
+      <div class="week-body">
+        <div class="topics">
+          <span class="topic-tag">Trie insert/search</span>
+          <span class="topic-tag">Prefix problems</span>
+          <span class="topic-tag highlight">AND / OR / XOR tricks</span>
+          <span class="topic-tag">Bit masking</span>
+        </div>
+        <div class="note-line"><span class="note-label study-note">📖 Study:</span><span>Tries: word dictionary problems. Bits: know XOR properties by heart</span></div>
+        <div class="note-line"><span class="note-label goal-note">🎯 Goal:</span><span>Solve string + XOR problems without brute force</span></div>
+        <div class="note-line"><span class="note-label warn-note">⚠️ Note:</span><span>Asked at Google, Meta — was MISSING from original roadmap!</span></div>
+      </div>
+    </div>
+
+    <div class="connector w9"><div class="connector-line"></div><div class="arrow">↓</div></div>
+
+    <!-- Week 11-12 -->
+    <div class="week-block w10">
+      <div class="week-header" onclick="toggle(this)">
+        🧠 Week 11–12: Dynamic Programming
+      </div>
+      <div class="week-body">
+        <div class="topics">
+          <span class="topic-tag">1D DP → 2D DP</span>
+          <span class="topic-tag">Knapsack</span>
+          <span class="topic-tag">LIS</span>
+          <span class="topic-tag">LCS</span>
+        </div>
+        <div class="note-line"><span class="note-label study-note">📖 Steps:</span><span>Recursion → Memoization → Tabulation</span></div>
+        <div class="note-line"><span class="note-label goal-note">🧠 Goal:</span><span style="background:#fef08a;padding:1px 4px;border-radius:3px;">Pattern recognition (NOT memorization!)</span></span></div>
+        <div class="note-line"><span class="note-label tip-note">💬 Tip:</span><span>DP is hard — give it 2 full weeks. Don't rush.</span></div>
+      </div>
+    </div>
+
+    <div class="connector w10"><div class="connector-line"></div><div class="arrow">↓</div></div>
+
+    <!-- Final Revision -->
+    <div class="week-block w11">
+      <div class="week-header" onclick="toggle(this)">
+        🔄 Final: Revision + Mock Tests <span class="new-badge">ADDED</span>
+      </div>
+      <div class="week-body">
+        <div class="topics">
+          <span class="topic-tag">Re-solve weak topics</span>
+          <span class="topic-tag">Timed mock contests</span>
+          <span class="topic-tag">LeetCode company tags</span>
+        </div>
+        <div class="note-line"><span class="note-label study-note">📖 Study:</span><span>2 mock tests/week on LeetCode or Codeforces. Review every mistake.</span></div>
+        <div class="note-line"><span class="note-label goal-note">✅ Goal:</span><span>Consistent 45–60 min problem solving speed</span></div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      ✅ 12 weeks · 10 topics · +3 improvements over original (Backtracking, Tries/Bits, Revision weeks)<br>
+      🏆 Suitable for beginners targeting product-based companies & FAANG
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Generate spirals
+  const container = document.getElementById('spirals');
+  const notebookHeight = 2000;
+  for (let i = 0; i < 60; i++) {
+    const s = document.createElement('div');
+    s.className = 'spiral';
+    container.appendChild(s);
+  }
+
+  function toggle(header) {
+    const body = header.nextElementSibling;
+    body.classList.toggle('collapsed');
+  }
+</script>
+</body>
+</html>
